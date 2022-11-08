@@ -52,7 +52,7 @@ fn close_the_application(e &webinix.Event) {
 mut my_window := webinix.new_window()
 
 // UI HTML
-my_html = ('
+my_html := ('
     <!DOCTYPE html>
     <html><head><title>Webinix 2 - V Example</title>
     <style>body{color: white; background: #0F2027;
