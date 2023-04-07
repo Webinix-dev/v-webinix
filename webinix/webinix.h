@@ -1,11 +1,13 @@
 /*
-    Webinix Library 2.0.4
+    Webinix Library 2.1.1
     
     http://webinix.me
     https://github.com/alifcommunity/webinix
 
-    Licensed under GNU General Public License v3.0.
-    Copyright (C)2022 Hassan DRAGA <https://github.com/hassandraga>.
+    Copyright (c) 2020-2023 Hassan Draga.
+    Licensed under GNU General Public License v2.0.
+    All rights reserved.
+    Canada.
 */
 
 #ifndef _WEBUI_H
@@ -17,18 +19,27 @@
     #define EXPORT extern
 #endif
 
-#define WEBUI_VERSION           "2.0.4"     // Version
+#define WEBUI_VERSION           "2.1.1"     // Version
 #define WEBUI_HEADER_SIGNATURE  0xFF        // All packets should start with this 8bit
 #define WEBUI_HEADER_JS         0xFE        // Javascript result in frontend
 #define WEBUI_HEADER_CLICK      0xFD        // Click event
 #define WEBUI_HEADER_SWITCH     0xFC        // Frontend refresh
 #define WEBUI_HEADER_CLOSE      0xFB        // Close window
 #define WEBUI_HEADER_CALL_FUNC  0xFA        // Call a backend function
-#define WEBUI_MAX_ARRAY         (32)        // Max thread, servers, windows..
-#define WEBUI_MIN_PORT          (8080)      // Minimum socket port
-#define WEBUI_MAX_PORT          (8335)      // Should be less than 65535
-#define WEBUI_MAX_BUF           (512000)    // 512 Kb max dynamic memory allocation
+#define WEBUI_MAX_ARRAY         (1024)      // Max threads, servers, windows, pointers..
+#define WEBUI_MIN_PORT          (10000)     // Minimum socket port
+#define WEBUI_MAX_PORT          (65500)     // Should be less than 65535
+#define WEBUI_MAX_BUF           (1024000)   // 1024 Kb max dynamic memory allocation
 #define WEBUI_DEFAULT_PATH      "."         // Default root path
+#define WEBUI_DEF_TIMEOUT       (8)         // Default startup timeout in seconds
+
+#define WEBUI_EVENT_CONNECTED           (1) // Window connected
+#define WEBUI_EVENT_MULTI_CONNECTION    (2) // Multi clients connected
+#define WEBUI_EVENT_UNWANTED_CONNECTION (3) // Unwanted client connected
+#define WEBUI_EVENT_DISCONNECTED        (4) // Window disconnected
+#define WEBUI_EVENT_MOUSE_CLICK         (5) // Mouse Click
+#define WEBUI_EVENT_NAVIGATION          (6) // The window URL changed
+#define WEBUI_EVENT_CALLBACK            (7) // Function call
 
 // -- C STD ---------------------------
 #include <stdbool.h>
@@ -42,6 +53,7 @@
 #include <stddef.h>
 #include <time.h>
 #include <errno.h>
+#include <math.h>
 #if defined(__GNUC__) || defined(__TINYC__)
     #include <dirent.h>
 #endif
@@ -80,6 +92,22 @@
     #define WEBUI_PCLOSE pclose
     #define WEBUI_MAX_PATH PATH_MAX
 #endif
+// -- Apple ---------------------------
+#ifdef __APPLE__
+    #include <pthread.h> // POSIX threading
+    #include <unistd.h>
+    #include <limits.h>
+    #include <dirent.h>
+    #include <sys/socket.h>
+    #include <fcntl.h>
+    #include <poll.h>
+    #include <sys/syslimits.h> // PATH_MAX
+    #define WEBUI_GET_CURRENT_DIR getcwd
+    #define WEBUI_FILE_EXIST access
+    #define WEBUI_POPEN popen
+    #define WEBUI_PCLOSE pclose
+    #define WEBUI_MAX_PATH PATH_MAX
+#endif
 
 // -- Structs -------------------------
 struct webinix_event_t;
@@ -95,9 +123,7 @@ typedef struct webinix_window_core_t {
     bool multi_access;
     bool server_root;
     unsigned int server_port;
-    bool is_bind_all;
     char* url;
-    void (*cb_all[1])(struct webinix_event_t* e);
     const char* html;
     const char* html_cpy;
     const char* icon;
@@ -108,6 +134,7 @@ typedef struct webinix_window_core_t {
     unsigned int connections;
     unsigned int runtime;
     bool detect_process_close;
+    bool has_events;
     #ifdef _WIN32
         HANDLE server_thread;
     #else
@@ -123,6 +150,9 @@ typedef struct webinix_event_t {
     unsigned int element_id;
     char* element_name;
     webinix_window_t* window;
+    void* data;
+    void* response;
+    int type;
 } webinix_event_t;
 typedef struct webinix_javascript_result_t {
     bool error;
@@ -136,8 +166,11 @@ typedef struct webinix_script_t {
 } webinix_script_t;
 typedef struct webinix_cb_t {
     webinix_window_t* win;
-    char* element_id;
+    char* webinix_internal_id;
     char* element_name;
+    void* data;
+    unsigned int data_len;
+    int event_type;
 } webinix_cb_t;
 typedef struct webinix_cmd_async_t {
     webinix_window_t* win;
@@ -155,6 +188,12 @@ typedef struct webinix_browser_t {
     unsigned int edge;      // 3
     unsigned int safari;    // 4
     unsigned int chromium;  // 5
+    unsigned int opera;     // 6
+    unsigned int brave;     // 7
+    unsigned int vivaldi;   // 8
+    unsigned int epic;      // 9
+    unsigned int yandex;    // 10
+    unsigned int current;   // x
     unsigned int custom;    // 99
 } webinix_browser_t;
 typedef struct webinix_runtime_t {
@@ -165,6 +204,7 @@ typedef struct webinix_runtime_t {
 typedef struct webinix_t {
     unsigned int servers;
     unsigned int connections;
+    unsigned int process;
     webinix_custom_browser_t *custom_browser;
     bool wait_for_socket_window;
     char* html_elements[WEBUI_MAX_ARRAY];
@@ -184,8 +224,7 @@ typedef struct webinix_t {
     webinix_runtime_t runtime;
     bool initialized;
     void (*cb[WEBUI_MAX_ARRAY])(webinix_event_t* e);
-    void (*cb_int[WEBUI_MAX_ARRAY])(unsigned int, unsigned int, char*, webinix_window_t*);
-    void (*cb_int_all[1])(unsigned int, unsigned int, char*, webinix_window_t*);
+    void (*cb_interface[WEBUI_MAX_ARRAY])(unsigned int, unsigned int, char*, webinix_window_t*, char*, char**);
     char* executable_path;
     void *ptr_list[WEBUI_MAX_ARRAY];
     unsigned int ptr_position;
@@ -194,27 +233,40 @@ typedef struct webinix_t {
 
 // -- Definitions ---------------------
 EXPORT webinix_t webinix;
-EXPORT void webinix_wait();
-EXPORT void webinix_exit();
-EXPORT bool webinix_is_any_window_running();
-EXPORT bool webinix_is_app_running();
-EXPORT void webinix_set_timeout(unsigned int second);
-EXPORT webinix_window_t* webinix_new_window();
-EXPORT bool webinix_show(webinix_window_t* win, const char* html, unsigned int browser);
-EXPORT bool webinix_show_cpy(webinix_window_t* win, const char* html, unsigned int browser);
-EXPORT bool webinix_refresh(webinix_window_t* win, const char* html);
-EXPORT bool webinix_refresh_cpy(webinix_window_t* win, const char* html);
-EXPORT void webinix_set_icon(webinix_window_t* win, const char* icon_s, const char* type_s);
-EXPORT void webinix_multi_access(webinix_window_t* win, bool status);
-EXPORT const char* webinix_new_server(webinix_window_t* win, const char* path);
-EXPORT void webinix_close(webinix_window_t* win);
-EXPORT bool webinix_is_shown(webinix_window_t* win);
-EXPORT void webinix_script(webinix_window_t* win, webinix_script_t* script);
+// Create a new window object
+EXPORT webinix_window_t* webinix_new_window(void);
+// Bind a specific html element click event with a function
 EXPORT unsigned int webinix_bind(webinix_window_t* win, const char* element, void (*func)(webinix_event_t* e));
-EXPORT void webinix_bind_all(webinix_window_t* win, void (*func)(webinix_event_t* e));
-EXPORT bool webinix_open(webinix_window_t* win, const char* url, unsigned int browser);
+// Show a window using a static HTML script, or a file name in the same working directory. If the window is already opened then it will be refreshed with the new content
+EXPORT bool webinix_show(webinix_window_t* win, const char* content);
+// Wait until all opened windows get closed
+EXPORT void webinix_wait(void);
+// Close a specific window
+EXPORT void webinix_close(webinix_window_t* win);
+// Close all opened windows
+EXPORT void webinix_exit(void);
+
+// JavaScript
+EXPORT void webinix_script(webinix_window_t* win, webinix_script_t* script);
 EXPORT void webinix_script_cleanup(webinix_script_t* script);
 EXPORT void webinix_script_runtime(webinix_window_t* win, unsigned int runtime);
+EXPORT long long int webinix_get_int(webinix_event_t* e);
+EXPORT const char* webinix_get_string(webinix_event_t* e);
+EXPORT bool webinix_get_bool(webinix_event_t* e);
+EXPORT void webinix_return_int(webinix_event_t* e, long long int n);
+EXPORT void webinix_return_string(webinix_event_t* e, char* s);
+EXPORT void webinix_return_bool(webinix_event_t* e, bool b);
+
+// Other
+EXPORT const char* webinix_new_server(webinix_window_t* win, const char* path);
+EXPORT bool webinix_open(webinix_window_t* win, const char* url, unsigned int browser);
+EXPORT bool webinix_is_any_window_running(void);
+EXPORT bool webinix_is_app_running(void);
+EXPORT bool webinix_is_shown(webinix_window_t* win);
+EXPORT void webinix_set_timeout(unsigned int second);
+EXPORT void webinix_set_icon(webinix_window_t* win, const char* icon_s, const char* type_s);
+EXPORT void webinix_multi_access(webinix_window_t* win, bool status);
+EXPORT void webinix_clean_mem(void* p);
 
 // -- Interface -----------------------
 // Used by other languages to create Webinix wrappers
@@ -225,37 +277,42 @@ typedef struct webinix_script_interface_t {
     unsigned int length;
     const char* data;
 } webinix_script_interface_t;
-EXPORT unsigned int webinix_bind_interface(webinix_window_t* win, const char* element, void (*func)(unsigned int, unsigned int, char*, webinix_window_t*));
-EXPORT void webinix_script_interface(webinix_window_t* win, const char* script, unsigned int timeout, bool* error, unsigned int* length, char* data);
+EXPORT unsigned int webinix_bind_interface(webinix_window_t* win, const char* element, void (*func)(unsigned int, unsigned int, char*, webinix_window_t*, char*, char**));
+EXPORT void webinix_script_interface(webinix_window_t* win, const char* script, unsigned int timeout, bool* error, unsigned int* length, char** data);
 EXPORT void webinix_script_interface_struct(webinix_window_t* win, webinix_script_interface_t* js_int);
 
 // Core
-EXPORT void _webinix_init();
-EXPORT unsigned int _webinix_get_cb_index(char* element);
-EXPORT unsigned int _webinix_set_cb_index(char* element);
-EXPORT unsigned int _webinix_get_free_port();
-EXPORT unsigned int _webinix_get_new_window_number();
-EXPORT void _webinix_wait_for_startup();
+EXPORT void _webinix_init(void);
+EXPORT unsigned int _webinix_get_cb_index(char* webinix_internal_id);
+EXPORT unsigned int _webinix_set_cb_index(char* webinix_internal_id);
+EXPORT unsigned int _webinix_get_free_port(void);
+EXPORT unsigned int _webinix_get_new_window_number(void);
+EXPORT void _webinix_wait_for_startup(void);
 EXPORT void _webinix_free_port(unsigned int port);
 EXPORT void _webinix_set_custom_browser(webinix_custom_browser_t* p);
-EXPORT char* _webinix_get_current_path();
+EXPORT char* _webinix_get_current_path(void);
 EXPORT void _webinix_window_receive(webinix_window_t* win, const char* packet, size_t len);
 EXPORT void _webinix_window_send(webinix_window_t* win, char* packet, size_t packets_size);
-EXPORT void _webinix_window_event(webinix_window_t* win, char* element_id, char* element);
+EXPORT void _webinix_window_event(webinix_window_t* win, char* element_id, char* element, void* data, unsigned int data_len, int event_type);
 EXPORT unsigned int _webinix_window_get_number(webinix_window_t* win);
 EXPORT void _webinix_window_open(webinix_window_t* win, char* link, unsigned int browser);
 EXPORT int _webinix_cmd_sync(char* cmd, bool show);
 EXPORT int _webinix_cmd_async(char* cmd, bool show);
 EXPORT int _webinix_run_browser(webinix_window_t* win, char* cmd);
-EXPORT void _webinix_browser_clean();
+EXPORT void _webinix_clean(void);
 EXPORT bool _webinix_browser_exist(webinix_window_t* win, unsigned int browser);
 EXPORT const char* _webinix_browser_get_temp_path(unsigned int browser);
 EXPORT bool _webinix_folder_exist(char* folder);
 EXPORT bool _webinix_browser_create_profile_folder(webinix_window_t* win, unsigned int browser);
-EXPORT bool _webinix_browser_start_edge(webinix_window_t* win, const char* address);
-EXPORT bool _webinix_browser_start_firefox(webinix_window_t* win, const char* address);
-EXPORT bool _webinix_browser_start_custom(webinix_window_t* win, const char* address);
 EXPORT bool _webinix_browser_start_chrome(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_edge(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_epic(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_vivaldi(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_brave(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_firefox(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_yandex(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_chromium(webinix_window_t* win, const char* address);
+EXPORT bool _webinix_browser_start_custom(webinix_window_t* win, const char* address);
 EXPORT bool _webinix_browser_start(webinix_window_t* win, const char* address, unsigned int browser);
 EXPORT long _webinix_timer_diff(struct timespec *start, struct timespec *end);
 EXPORT void _webinix_timer_start(webinix_timer_t* t);
@@ -264,6 +321,13 @@ EXPORT void _webinix_timer_clock_gettime(struct timespec *spec);
 EXPORT bool _webinix_set_root_folder(webinix_window_t* win, const char* path);
 EXPORT void _webinix_wait_process(webinix_window_t* win, bool status);
 EXPORT const char* _webinix_generate_js_bridge(webinix_window_t* win);
+EXPORT void _webinix_print_hex(const char* data, size_t len);
+EXPORT void _webinix_free_mem(void **p);
+EXPORT bool _webinix_file_exist_mg(void *ev_data);
+EXPORT bool _webinix_file_exist(char* file);
+EXPORT void _webinix_free_all_mem(void);
+EXPORT bool _webinix_show_window(webinix_window_t* win, const char* html, unsigned int browser);
+EXPORT char* _webinix_generate_internal_id(webinix_window_t* win, const char* element);
 #ifdef _WIN32
     EXPORT DWORD WINAPI _webinix_cb(LPVOID _arg);
     EXPORT DWORD WINAPI _webinix_run_browser_task(LPVOID _arg);
