@@ -15,6 +15,18 @@ pub const (
 	event_mouse_click = 5
 	event_navigation = 6
 	event_callback = 7
+	browser_any = 0
+	browser_chrome = 1
+	browser_firefox = 2
+	browser_edge = 3
+	browser_safari = 4
+	browser_chromium = 5
+	browser_opera = 6
+	browser_brave = 7
+	browser_vivaldi = 8
+	browser_epic = 9
+	browser_yandex = 10
+	browser_custom = 99
 )
 
 // C Functions & Typedefs
@@ -230,6 +242,13 @@ pub fn (window &C.webinix_window_t) show (html_code string) bool {
 	return C.webinix_show(window, html_code.str)
 }
 
+pub fn (window &C.webinix_window_t) close () {
+	C.webinix_close(window)
+}
+
+pub fn (window &C.webinix_window_t) open (html_code string, browser int) bool {
+	return C.webinix_open(window, html_code.str, browser)
+}
 pub fn exit() {
 	C.webinix_exit()
 }
