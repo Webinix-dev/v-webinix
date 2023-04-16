@@ -223,6 +223,38 @@ pub fn (javascript &C.webinix_script_t) cleanup () {
     C.webinix_script_cleanup(javascript)
 }
 
+struct WebuiResponseData {
+pub mut:
+	string	string
+	int	int
+	bool	bool
+}
+
+pub fn (event &C.webinix_event_t) get () WebuiResponseData {
+    str := unsafe { C.webinix_get_string(event).vstring() }
+    return WebuiResponseData {
+        string: str
+        int: str.int()
+        bool: str == "true"
+    }
+}
+
+type WebuiResponseReturn = int | string | bool
+
+pub fn (event &C.webinix_event_t) @return (response WebuiResponseReturn) {
+    match response {
+        string {
+            C.webinix_return_string(event, &char(response.str))
+    	}
+        int {
+            C.webinix_return_int(event, response)
+    	}
+        bool {
+            C.webinix_return_bool(event, int(response))
+    	}
+    }
+}
+
 pub fn (javascript_result C.webinix_javascript_result_t) get () string {
 	unsafe {
 		return javascript_result.data.vstring()
