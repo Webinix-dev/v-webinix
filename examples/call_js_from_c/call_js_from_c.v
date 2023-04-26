@@ -1,22 +1,8 @@
 import malisipi.vwebinix as webinix
 
 fn my_function_count(e &webinix.Event_t) {
-    mut js := webinix.Script_t {timeout: 3}
-    js.set_script("return GetCount();")
-
-    e.window.script(&js)
-
-    if js.result.error { // Check if there is any JavaScript error
-        println("JavaScript Error:\n"+js.result.get())
-        return
-    }
-
-    count := js.result.get().int() + 1
-    js.set_script("SetCount(${count});")
-
-    e.window.script(&js)
-
-    js.cleanup() // Free data resources
+  count := e.window.script("return count;", 0, 48)
+  e.window.script("SetCount(${count.int() + 1});", 0, 0)
 }
 
 fn my_function_exit(e &webinix.Event_t) { // Close all opened windows
