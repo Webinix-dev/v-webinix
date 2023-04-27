@@ -1,14 +1,7 @@
-/*
-    Webinix Library 2.x
-    V Example
-    Licensed under GNU General Public License v3.0.
-    Copyright (C)2022 Hassan DRAGA <https://github.com/hassandraga>.
-    Copyright (C)2022-2023 Mehmet Ali Şipi <https://github.com/malisipi>.
-*/
+// v install https://github.com/malisipi/vwebinix
+import vwebinix as webinix
 
-import malisipi.vwebinix as webinix
-
-fn check_the_password(e &webinix.Event_t) { // Check the password function
+fn check_the_password(e &webinix.Event) { // Check the password function
     password := e.window.script("return document.getElementById(\"MyInput\").value;", 0, 4096)
     println("Password: "+password)
     
@@ -19,7 +12,7 @@ fn check_the_password(e &webinix.Event_t) { // Check the password function
     }
 }
 
-fn close_the_application(e &webinix.Event_t) { // Close all opened windows
+fn close_the_application(e &webinix.Event) { // Close all opened windows
     webinix.exit()
 }
 
