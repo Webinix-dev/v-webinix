@@ -1,5 +1,5 @@
 // v install https://github.com/malisipi/vwebinix
-import vwebinix as webinix
+import malisipi.vwebinix as webinix
 
 fn events(e &webinix.Event) { // Close all opened windows
     // This function gets called every time

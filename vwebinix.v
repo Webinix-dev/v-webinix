@@ -15,9 +15,14 @@ module vwebinix
 #include "@VMODROOT/webinix/webinix_core.h"
 #flag @VMODROOT/webinix/mongoose.c
 #flag @VMODROOT/webinix/webinix.c
-#flag windows -m64 -DUNICODE -Dstrtoll=_strtoi64 -Dstrtoull=_strtoui64 -lws2_32 -lAdvapi32 -luser32 -DWEBUI_NO_TLHELPER32
+#flag windows -Dstrtoll=_strtoi64 -Dstrtoull=_strtoui64 -lws2_32 -lAdvapi32 -luser32
+$if tinyc {
+	#flag windows -DWEBUI_NO_TLHELPER32
+}
 // Debug
-#flag windows -DWEBUI_LOG
+$if webinix_log? {
+	#flag -DWEBUI_LOG
+}
 
 // Consts
 

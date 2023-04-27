@@ -1,5 +1,5 @@
 // v install https://github.com/malisipi/vwebinix
-import vwebinix as webinix
+import malisipi.vwebinix as webinix
 
 fn check_the_password(e &webinix.Event) { // Check the password function
     password := e.window.script("return document.getElementById(\"MyInput\").value;", 0, 4096)
