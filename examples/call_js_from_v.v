@@ -1,11 +1,12 @@
-import malisipi.vwebinix as webinix
+// v install https://github.com/malisipi/vwebinix
+import vwebinix as webinix
 
-fn my_function_count(e &webinix.Event_t) {
+fn my_function_count(e &webinix.Event) {
   count := e.window.script("return count;", 0, 48)
   e.window.script("SetCount(${count.int() + 1});", 0, 0)
 }
 
-fn my_function_exit(e &webinix.Event_t) { // Close all opened windows
+fn my_function_exit(e &webinix.Event) { // Close all opened windows
     webinix.exit()
 }
 
@@ -15,7 +16,7 @@ mut my_window := webinix.new_window() // Create a window
 my_html := ('
 <html>
   <head>
-    <title>Call JavaScript from C Example</title>
+    <title>Call JavaScript from V Example</title>
     <style>
       body {
         color: white;
@@ -27,7 +28,7 @@ my_html := ('
     </style>
   </head>
   <body>
-    <h2>Webinix - Call JavaScript from C Example</h2>
+    <h2>Webinix - Call JavaScript from V Example</h2>
     <br>
     <h1 id="MyElementID">Count is ?</h1>
     <br>
@@ -37,7 +38,7 @@ my_html := ('
     <br>
     <button id="MyButton2">Exit</button>
     <script>
-      var count = 1;
+      var count = 0;
       function GetCount() {
         return count;
       }
