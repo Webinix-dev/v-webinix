@@ -4,13 +4,13 @@ import malisipi.vwebinix as webinix
 fn events(e &webinix.Event) { // Close all opened windows
     // This function gets called every time
     // there is an event
-    if e.@type == webinix.event_connected {
+    if e.event_type == webinix.event_connected {
         println("Connected.")
-    } else if e.@type == webinix.event_disconnected {
+    } else if e.event_type == webinix.event_disconnected {
         println("Disconnected.")
-    } else if e.@type == webinix.event_mouse_click {
+    } else if e.event_type == webinix.event_mouse_click {
         println("Click.")
-    } else if e.@type == webinix.event_navigation {
+    } else if e.event_type == webinix.event_navigation {
         //println("Starting navigation to: ${e.data}")
     }
 }
