@@ -144,6 +144,11 @@ pub fn (window Window) show (content string) bool {
 	return C.webinix_show(window, content.str)
 }
 
+// Show a window using a embedded HTML, or a file with specific browser. If the window is already opened then it will be refreshed.
+pub fn (window Window) show_browser (content string, browser_id u64) bool {
+	return C.webinix_show_browser(window, content.str, browser_id)
+}
+
 // Close a specific window.
 pub fn (window Window) close () {
 	C.webinix_close(window)
