@@ -79,6 +79,7 @@ fn C.webinix_set_icon(win Window, icon &char, icon_type &char)
 fn C.webinix_multi_access(win Window, status bool)
 fn C.webinix_run(win Window, script &char)
 fn C.webinix_script(win Window, script &char, timeout u64, buffer &char, size_buffer u64)
+fn C.webinix_set_kiosk(win Window, kiosk bool)
 fn C.webinix_set_runtime(win Window, runtime u64)
 fn C.webinix_get_int(e &Event) i64
 fn C.webinix_get_string(e &Event) &char
@@ -157,6 +158,10 @@ pub fn (window Window) close () {
 // Close all opened windows. webinix_wait() will break.
 pub fn exit() {
 	C.webinix_exit()
+}
+
+pub fn (window Window) set_kiosk (kiosk bool){
+	C.webinix_set_kiosk(window, kiosk)
 }
 
 // Bind a specific html element click event with a function. Empty element means all events.
