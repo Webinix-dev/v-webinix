@@ -53,7 +53,7 @@ Run ```v install malisipi.VWebinix``` or ```v install https://github.com/malisip
 
 ### License
 
-> Licensed under GNU General Public License v2.0.
+> Licensed under MIT License.
 
 ### Original Library
 
