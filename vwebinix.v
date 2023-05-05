@@ -1,8 +1,8 @@
 /*
-  V-Webinix 2.2.0
+  V-Webinix 2.3.0
   https://github.com/malisipi/vwebinix
   Copyright (c) 2023 Mehmet Ali.
-  Licensed under GNU General Public License v2.0.
+  Licensed under MIT License.
   All rights reserved.
 */
 
@@ -10,11 +10,13 @@ module vwebinix
 
 // Webinix Core
 
-#include "@VMODROOT/webinix/mongoose.h"
 #include "@VMODROOT/webinix/webinix.h"
 #include "@VMODROOT/webinix/webinix_core.h"
-#flag @VMODROOT/webinix/mongoose.c
 #flag @VMODROOT/webinix/webinix.c
+
+#flag @VMODROOT/webinix/civetweb/civetweb.c
+#flag -DNDEBUG -DNO_CACHING -DNO_CGI -DNO_SSL -DUSE_WEBSOCKET
+
 #flag windows -Dstrtoll=_strtoi64 -Dstrtoull=_strtoui64 -lws2_32 -lAdvapi32 -luser32
 $if tinyc {
 	#flag windows -DWEBUI_NO_TLHELPER32
@@ -59,7 +61,7 @@ pub struct C.webinix_event_t {
 		event_type		u64 // Event type
 		element			&char // HTML element ID
 		data			&char // JavaScript data
-		event_number	u64 // To set the callback response
+		event_number		u64 // To set the callback response
 }
 pub type Event = C.webinix_event_t
 pub type Function = fn(e &Event)
@@ -160,6 +162,7 @@ pub fn exit() {
 	C.webinix_exit()
 }
 
+// Set the window in Kiosk mode (Full screen)
 pub fn (window Window) set_kiosk (kiosk bool){
 	C.webinix_set_kiosk(window, kiosk)
 }
