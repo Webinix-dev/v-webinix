@@ -43,6 +43,7 @@ typedef struct _webinix_window_t {
     bool server_running;
     volatile bool connected;
     bool html_handled;
+    bool server_handled;
     bool multi_access;
     bool is_embedded_html;
     unsigned int server_port;
@@ -89,6 +90,7 @@ typedef struct _webinix_core_t {
     unsigned int current_browser;
     struct mg_connection* mg_connections[WEBUI_MAX_ARRAY];
     _webinix_window_t* wins[WEBUI_MAX_ARRAY];
+    bool server_handled;
 } _webinix_core_t;
 
 typedef struct _webinix_cb_arg_t {
@@ -175,6 +177,7 @@ static void _webinix_free_all_mem(void);
 static bool _webinix_show_window(_webinix_window_t* win, const char* content, bool is_embedded_html, unsigned int browser);
 static char* _webinix_generate_internal_id(_webinix_window_t* win, const char* element);
 static bool _webinix_is_empty(const char* s);
+static size_t _webinix_strlen(const char* s);
 static unsigned char _webinix_get_run_id(void);
 static void* _webinix_malloc(int size);
 static void _webinix_sleep(long unsigned int ms);
