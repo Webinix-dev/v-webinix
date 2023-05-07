@@ -1,42 +1,45 @@
 // v install https://github.com/malisipi/vwebinix
 import malisipi.vwebinix as webinix
 
-fn my_function_string(e &webinix.Event) {
+fn my_function_string(e &webinix.Event) webinix.Response {
     // JavaScript:
     // webinix_fn('MyID_One', 'Hello');
 
-    response := e.get().string
+    response := e.data.string
     println("my_function_string: ${response}") // Hello
 
     // Need Multiple Arguments?
     //
     // Webinix support only one argument. To get multiple arguments
     // you can send a JSON string from JavaScript then decode it.
+    return 0
 }
 
-fn my_function_integer(e &webinix.Event) {
+fn my_function_integer(e &webinix.Event) webinix.Response {
     // JavaScript:
     // webinix_fn('MyID_Two', 123456789);
 
-    response := e.get().string
+    response := e.data.int
     println("my_function_integer: ${response}") // 123456789
+    return 0
 }
 
-fn my_function_boolean(e &webinix.Event) {
+fn my_function_boolean(e &webinix.Event) webinix.Response {
     // JavaScript:
     // webinix_fn('MyID_Three', true);
 
-    response := e.get().bool
+    response := e.data.bool
     println("my_function_boolean: ${response}") // true
+    return 0
 }
 
-fn my_function_with_response(e &webinix.Event) {
+fn my_function_with_response(e &webinix.Event) webinix.Response {
     // JavaScript:
     // const result = webinix_fn('MyID_Four', number);
 
-    number := e.get().int * 2
+    number := e.data.int * 2
     println("my_function_with_response: ${number}")
-    e.@return(number)
+    return number 
 }
 
 mut my_window := webinix.new_window() // Create a window
