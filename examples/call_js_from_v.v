@@ -1,13 +1,15 @@
 // v install https://github.com/malisipi/vwebinix
 import malisipi.vwebinix as webinix
 
-fn my_function_count(e &webinix.Event) {
+fn my_function_count(e &webinix.Event) webinix.Response {
   count := e.window.script("return count;", 0, 48)
   e.window.script("SetCount(${count.int() + 1});", 0, 0)
+  return 0
 }
 
-fn my_function_exit(e &webinix.Event) { // Close all opened windows
+fn my_function_exit(e &webinix.Event) webinix.Response { // Close all opened windows
     webinix.exit()
+    return 0
 }
 
 mut my_window := webinix.new_window() // Create a window

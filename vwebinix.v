@@ -1,3 +1,4 @@
+[translated]
 /*
   V-Webinix 2.3.0
   https://github.com/malisipi/vwebinix
@@ -27,6 +28,9 @@ $if webinix_log? {
 }
 
 // Consts
+__global (
+	function_list map[u64]map[string]Function
+)
 
 pub const (
 	event_disconnected = 0
@@ -63,13 +67,22 @@ pub struct C.webinix_event_t {
 		data			&char // JavaScript data
 		event_number		u64 // To set the callback response
 }
-pub type Event = C.webinix_event_t
-pub type Function = fn(e &Event)
+pub type CEvent = C.webinix_event_t
+pub type CFunction = fn(e &CEvent)
+pub struct Event {
+	pub mut:
+		window			Window // Pointer to the window object
+		event_type		u64 // Event type
+		element			string // HTML element ID
+		data			WebuiResponseData // JavaScript data
+		event_number	u64 // To set the callback response
+}
+pub type Function = fn(e &Event) Response
 
 // C Functions
 
 fn C.webinix_new_window() Window
-fn C.webinix_bind(win Window, element &char, func fn (&Event)) u64
+fn C.webinix_bind(win Window, element &char, func fn (&CEvent)) u64
 fn C.webinix_show(win Window, content &char) bool
 fn C.webinix_show_browser(win Window, content &char, browser u64) bool
 fn C.webinix_wait()
@@ -83,12 +96,12 @@ fn C.webinix_run(win Window, script &char)
 fn C.webinix_script(win Window, script &char, timeout u64, buffer &char, size_buffer u64)
 fn C.webinix_set_kiosk(win Window, kiosk bool)
 fn C.webinix_set_runtime(win Window, runtime u64)
-fn C.webinix_get_int(e &Event) i64
-fn C.webinix_get_string(e &Event) &char
-fn C.webinix_get_bool(e &Event) bool
-fn C.webinix_return_int(e &Event, n i64)
-fn C.webinix_return_string(e &Event, s &char)
-fn C.webinix_return_bool(e &Event, b bool)
+fn C.webinix_get_int(e &CEvent) i64
+fn C.webinix_get_string(e &CEvent) &char
+fn C.webinix_get_bool(e &CEvent) bool
+fn C.webinix_return_int(e &CEvent, n i64)
+fn C.webinix_return_string(e &CEvent, s &char)
+fn C.webinix_return_bool(e &CEvent, b bool)
 fn C.webinix_interface_is_app_running() bool
 fn C.webinix_interface_get_window_id(win Window) u64
 
@@ -107,7 +120,7 @@ pub mut:
 	int		int
 	bool	bool
 }
-pub fn (e &Event) get () WebuiResponseData {
+pub fn (e &CEvent) get () WebuiResponseData {
     str := unsafe { C.webinix_get_string(e).vstring() }
     return WebuiResponseData {
         string: str
@@ -117,16 +130,14 @@ pub fn (e &Event) get () WebuiResponseData {
 }
 
 // Return
-type WebuiResponseReturn = int | string | bool
-pub fn (e &Event) @return (response WebuiResponseReturn) {
+type Response = int | string | bool
+pub fn (e &CEvent) @return (response Response) {
     match response {
         string {
             C.webinix_return_string(e, &char(response.str))
-    	}
-        int {
+    	} int {
             C.webinix_return_int(e, i64(response))
-    	}
-        bool {
+    	} bool {
             C.webinix_return_bool(e, int(response))
     	}
     }
@@ -187,9 +198,24 @@ pub fn (window Window) set_kiosk (kiosk bool){
 	C.webinix_set_kiosk(window, kiosk)
 }
 
+fn native_event_handler(e &CEvent) {
+	unsafe {
+		registered_function := function_list[C.webinix_interface_get_window_id(e.window)][e.element.vstring()]
+		resp := registered_function(Event{
+			window: e.window,
+			event_type: e.event_type
+			element: e.element.vstring()
+			data: e.get()
+			event_number: e.event_number
+		})
+		e.@return(resp)
+	}
+}
+
 // Bind a specific html element click event with a function. Empty element means all events.
 pub fn (window Window) bind (element string, func Function) {
-	C.webinix_bind(window, element.str, func)
+	function_list[C.webinix_interface_get_window_id(window)][element] = func
+	C.webinix_bind(window, element.str, native_event_handler)
 }
 
 // Set the maximum time in seconds to wait for browser to start
