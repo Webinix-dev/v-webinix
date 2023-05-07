@@ -167,6 +167,11 @@ pub fn (window Window) run (script string) {
 	C.webinix_run(window, &char(script.str))
 }
 
+// Chose between Deno and Nodejs runtime for .js and .ts files.
+pub fn (window Window) set_runtime (runtime u64) {
+	C.webinix_set_runtime(window, runtime)
+}
+
 // Close a specific window.
 pub fn (window Window) close () {
 	C.webinix_close(window)
