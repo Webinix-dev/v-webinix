@@ -87,6 +87,7 @@ fn C.webinix_show(win Window, content &char) bool
 fn C.webinix_show_browser(win Window, content &char, browser u64) bool
 fn C.webinix_wait()
 fn C.webinix_close(win Window)
+fn C.webinix_destroy(win Window)
 fn C.webinix_exit()
 fn C.webinix_is_shown(win Window) bool
 fn C.webinix_set_timeout(second u64)
@@ -186,10 +187,16 @@ pub fn (window Window) set_runtime (runtime u64) Window {
 	return window
 }
 
-// Close a specific window.
+// Close a specific window only.
 pub fn (window Window) close () {
 	C.webinix_close(window)
 }
+
+// Close a specific window and clear all resources.
+pub fn (window Window) destroy () {
+	C.webinix_destroy(window)
+}
+
 
 // Close all opened windows. webinix_wait() will break.
 pub fn exit() {
