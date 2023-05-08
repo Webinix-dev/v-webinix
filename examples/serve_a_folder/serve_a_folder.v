@@ -1,7 +1,7 @@
 // v install https://github.com/malisipi/vwebinix
 import malisipi.vwebinix as webinix
 
-fn events(e &webinix.Event) { // Close all opened windows
+fn events(e &webinix.Event) webinix.Response { // Close all opened windows
     // This function gets called every time
     // there is an event
     if e.event_type == webinix.event_connected {
@@ -13,23 +13,27 @@ fn events(e &webinix.Event) { // Close all opened windows
     } else if e.event_type == webinix.event_navigation {
         //println("Starting navigation to: ${e.data}")
     }
+    return 0
 }
 
-fn switch_to_second_page(e &webinix.Event) {
+fn switch_to_second_page(e &webinix.Event) webinix.Response {
     // This function gets called every
     // time the user clicks on "SwitchToSecondPage"
     // Switch to `/second.html` in the same opened window.
     e.window.show("second.html")
+    return 0
 }
 
-fn show_second_window(e &webinix.Event) {
-    mut my_second_window := webinix.new_window()
-    my_second_window.bind("Exit", exit_app)
-    my_second_window.show("second.html")
+fn show_second_window(e &webinix.Event) webinix.Response {
+    webinix.new_window()
+    	.bind("Exit", exit_app)
+    	.show("second.html")
+    return 0
 }
 
-fn exit_app(e &webinix.Event) { // Close all opened windows
+fn exit_app(e &webinix.Event) webinix.Response { // Close all opened windows
     webinix.exit()
+    return 0
 }
 
 // Create new windows
