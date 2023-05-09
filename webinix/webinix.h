@@ -145,6 +145,8 @@ typedef struct webinix_event_t {
 WEBUI_EXPORT size_t webinix_new_window(void);
 // Create a new webinix window object.
 WEBUI_EXPORT void webinix_new_window_id(size_t window_number);
+// Get a free window ID that can be used with `webinix_new_window_id()`
+WEBUI_EXPORT size_t webinix_get_new_window_id(void);
 // Bind a specific html element click event with a function. Empty element means all events.
 WEBUI_EXPORT size_t webinix_bind(size_t window, const char* element, void (*func)(webinix_event_t* e));
 // Show a window using a embedded HTML, or a file. If the window is already opened then it will be refreshed.
@@ -174,7 +176,7 @@ WEBUI_EXPORT void webinix_set_multi_access(size_t window, bool status);
 
 // -- JavaScript ----------------------
 // Run JavaScript quickly with no waiting for the response.
-WEBUI_EXPORT bool webinix_run(size_t window, const char* script);
+WEBUI_EXPORT void webinix_run(size_t window, const char* script);
 // Run a JavaScript, and get the response back (Make sure your local buffer can hold the response).
 WEBUI_EXPORT bool webinix_script(size_t window, const char* script, size_t timeout, char* buffer, size_t buffer_length);
 // Chose between Deno and Nodejs runtime for .js and .ts files.
@@ -191,6 +193,12 @@ WEBUI_EXPORT void webinix_return_int(webinix_event_t* e, long long int n);
 WEBUI_EXPORT void webinix_return_string(webinix_event_t* e, char* s);
 // Return the response to JavaScript as boolean.
 WEBUI_EXPORT void webinix_return_bool(webinix_event_t* e, bool b);
+// Base64 encoding. Use this to safely send text based data to the UI. If it fails it will return NULL.
+WEBUI_EXPORT char* webinix_encode(const char* str);
+// Base64 decoding. Use this to safely decode received Base64 text from the UI. If it fails it will return NULL.
+WEBUI_EXPORT char* webinix_decode(const char* str);
+// Safely free a buffer allocated by Webinix, for example when using webinix_encode().
+WEBUI_EXPORT void webinix_free(void* ptr);
 
 // -- Interface -----------------------
 // Bind a specific html element click event with a function. Empty element means all events. This replace webinix_bind(). The func is (Window, EventType, Element, Data, EventNumber)
