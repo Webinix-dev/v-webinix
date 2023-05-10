@@ -12,9 +12,19 @@ Use any web browser as GUI, with V in the backend and HTML5 in the frontend, all
 - Multi-platform & Multi-Browser
 - Using private profile for safety
 
+## Screenshot
+
+This [text editor example](https://github.com/malisipi/vwebinix/tree/main/examples/text-editor) is written in V using Webinix as the GUI library.
+
+![ScreenShot](v_example.png)
+
 ## Installation
 
-Run ```v install malisipi.VWebinix``` or ```v install https://github.com/malisipi/vwebinix```
+Run `v install malisipi.VWebinix` or `v install https://github.com/malisipi/vwebinix`
+
+## Documentation
+
+ - [Online Documentation - V](https://webinix.me/docs/#/v_api)
 
 ## Supported Web Browsers
 
@@ -40,14 +50,14 @@ Run ```v install malisipi.VWebinix``` or ```v install https://github.com/malisip
 | Linux | Epic | *Does Not Exist* |
 | Linux | Opera | *coming soon* |
 | - | - | - |
-| macOS | Mozilla Firefox | *coming soon* |
+| macOS | Mozilla Firefox | ✔️ |
 | macOS | Google Chrome | ✔️ |
-| macOS | Microsoft Edge | *coming soon* |
-| macOS | Chromium | *coming soon* |
-| macOS | Yandex | *coming soon* |
-| macOS | Brave | *coming soon* |
-| macOS | Vivaldi | *coming soon* |
-| macOS | Epic | *coming soon* |
+| macOS | Microsoft Edge | ✔️ |
+| macOS | Chromium | ✔️ |
+| macOS | Yandex | ✔️ |
+| macOS | Brave | ✔️ |
+| macOS | Vivaldi | ✔️ |
+| macOS | Epic | ✔️ |
 | macOS | Apple Safari | *coming soon* |
 | macOS | Opera | *coming soon* |
 
