@@ -20,7 +20,7 @@ This [text editor example](https://github.com/malisipi/vwebinix/tree/main/exampl
 
 ## Installation
 
-Run `v install malisipi.VWebinix` or `v install https://github.com/malisipi/vwebinix`
+Run `v install https://github.com/webinix-dev/v-webinix`
 
 ## Documentation
 
