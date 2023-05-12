@@ -1,5 +1,4 @@
-// v install https://github.com/malisipi/vwebinix
-import malisipi.vwebinix as webinix
+import vwebinix as webinix
 
 const (
     my_window = 1
