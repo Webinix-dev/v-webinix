@@ -1,5 +1,4 @@
-// v install https://github.com/malisipi/vwebinix
-import malisipi.vwebinix as webinix
+import vwebinix as webinix
 
 fn my_function_string(e &webinix.Event) webinix.Response {
     // JavaScript:
