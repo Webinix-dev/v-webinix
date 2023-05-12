@@ -1,4 +1,4 @@
-import malisipi.vwebinix as webinix
+import vwebinix as webinix
 import encoding.base64
 import os
 import json
