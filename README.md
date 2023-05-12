@@ -82,4 +82,4 @@ Run `v install malisipi.VWebinix` or `v install https://github.com/malisipi/vweb
 
 ### Original Library
 
-> This is just a wrapper written in/for V. Thanks to [Webinix](https://github.com/alifcommunity/webinix)
+> This is just a wrapper written in/for V. Thanks to [Webinix](https://github.com/webinix-dev/webinix)
