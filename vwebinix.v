@@ -1,12 +1,12 @@
-[translated]
 /*
-  V-Webinix 2.3.0
-  https://github.com/malisipi/vwebinix
-  Copyright (c) 2023 Mehmet Ali.
-  Licensed under MIT License.
-  All rights reserved.
+V-Webinix 2.3.0
+https://github.com/malisipi/vwebinix
+Copyright (c) 2023 Mehmet Ali.
+Licensed under MIT License.
+All rights reserved.
 */
 
+[translated]
 module vwebinix
 
 // Webinix Core
@@ -23,7 +23,7 @@ $if tinyc {
 	#flag windows -DWEBUI_NO_TLHELPER32
 }
 // Debug
-$if webinix_log? {
+$if webinix_log ? {
 	#flag -DWEBUI_LOG
 }
 
@@ -65,25 +65,29 @@ pub enum runtime as u64 {
 // Typedefs of struct
 
 pub type Window = u64
+
 pub struct C.webinix_event_t {
-	pub mut:
-		window			Window // Pointer to the window object
-		event_type		u64 // Event type
-		element			&char // HTML element ID
-		data			&char // JavaScript data
-		event_number	u64 // To set the callback response
+pub mut:
+	window       Window // Pointer to the window object
+	event_type   u64    // Event type
+	element      &char  // HTML element ID
+	data         &char  // JavaScript data
+	event_number u64    // To set the callback response
 }
+
 pub type CEvent = C.webinix_event_t
-pub type CFunction = fn(e &CEvent)
+pub type CFunction = fn (e &CEvent)
+
 pub struct Event {
-	pub mut:
-		window			Window // Pointer to the window object
-		event_type		event // Event type
-		element			string // HTML element ID
-		data			WebuiResponseData // JavaScript data
-		event_number	u64 // To set the callback response
+pub mut:
+	window       Window // Pointer to the window object
+	event_type   event  // Event type
+	element      string // HTML element ID
+	data         WebuiResponseData // JavaScript data
+	event_number u64 // To set the callback response
 }
-pub type Function = fn(e &Event) Response
+
+pub type Function = fn (e &Event) Response
 
 // C Functions
 
@@ -117,40 +121,44 @@ fn C.webinix_get_new_window_id() u64
 
 // V Interface
 
-pub fn (window Window) script (javascript string, timeout u64, size_buffer int) string {
-	response := &char(" ".repeat(size_buffer).str)
-    C.webinix_script(window, &char(javascript.str), timeout, response, size_buffer)
+pub fn (window Window) script(javascript string, timeout u64, size_buffer int) string {
+	response := &char(' '.repeat(size_buffer).str)
+	C.webinix_script(window, &char(javascript.str), timeout, response, size_buffer)
 	return unsafe { response.vstring() }
 }
 
 // Get
 struct WebuiResponseData {
 pub mut:
-	string	string
-	int		int
-	bool	bool
+	string string
+	int    int
+	bool   bool
 }
-pub fn (e &CEvent) get () WebuiResponseData {
-    str := unsafe { cstring_to_vstring(C.webinix_get_string(e)) }
-    return WebuiResponseData {
-        string: str
-        int: str.int()
-        bool: str == "true"
-    }
+
+pub fn (e &CEvent) get() WebuiResponseData {
+	str := unsafe { cstring_to_vstring(C.webinix_get_string(e)) }
+	return WebuiResponseData{
+		string: str
+		int: str.int()
+		bool: str == 'true'
+	}
 }
 
 // Return
-type Response = int | string | bool
-pub fn (e &CEvent) @return (response Response) {
-    match response {
-        string {
-            C.webinix_return_string(e, &char(response.str))
-    	} int {
-            C.webinix_return_int(e, i64(response))
-    	} bool {
-            C.webinix_return_bool(e, int(response))
-    	}
-    }
+type Response = bool | int | string
+
+pub fn (e &CEvent) @return(response Response) {
+	match response {
+		string {
+			C.webinix_return_string(e, &char(response.str))
+		}
+		int {
+			C.webinix_return_int(e, i64(response))
+		}
+		bool {
+			C.webinix_return_bool(e, int(response))
+		}
+	}
 }
 
 // Create a new webinix window object.
@@ -164,48 +172,47 @@ pub fn wait() {
 }
 
 // Show a window using a embedded HTML, or a file. If the window is already opened then it will be refreshed.
-pub fn (window Window) show (content string) bool {
+pub fn (window Window) show(content string) bool {
 	return C.webinix_show(window, content.str)
 }
 
 // Show a window using a embedded HTML, or a file with specific browser. If the window is already opened then it will be refreshed.
-pub fn (window Window) show_browser (content string, browser_id browser) bool {
+pub fn (window Window) show_browser(content string, browser_id browser) bool {
 	return C.webinix_show_browser(window, content.str, browser_id)
 }
 
 // Check a specific window if it's still running
-pub fn (window Window) is_shown () bool {
+pub fn (window Window) is_shown() bool {
 	return C.webinix_is_shown(window)
 }
 
 // Allow the window URL to be re-used in normal web browsers
-pub fn (window Window) set_multi_access (status bool) Window {
+pub fn (window Window) set_multi_access(status bool) Window {
 	C.webinix_set_multi_access(window, status)
 	return window
 }
 
 // Run JavaScript quickly with no waiting for the response.
-pub fn (window Window) run (script string) Window {
+pub fn (window Window) run(script string) Window {
 	C.webinix_run(window, &char(script.str))
 	return window
 }
 
 // Chose between Deno and Nodejs runtime for .js and .ts files.
-pub fn (window Window) set_runtime (runtime runtime) Window {
+pub fn (window Window) set_runtime(runtime runtime) Window {
 	C.webinix_set_runtime(window, runtime)
 	return window
 }
 
 // Close a specific window only.
-pub fn (window Window) close () {
+pub fn (window Window) close() {
 	C.webinix_close(window)
 }
 
 // Close a specific window and clear all resources.
-pub fn (window Window) destroy () {
+pub fn (window Window) destroy() {
 	C.webinix_destroy(window)
 }
-
 
 // Close all opened windows. webinix_wait() will break.
 pub fn exit() {
@@ -213,7 +220,7 @@ pub fn exit() {
 }
 
 // Set the window in Kiosk mode (Full screen)
-pub fn (window Window) set_kiosk (kiosk bool) Window {
+pub fn (window Window) set_kiosk(kiosk bool) Window {
 	C.webinix_set_kiosk(window, kiosk)
 	return window
 }
@@ -224,8 +231,8 @@ fn native_event_handler(e &CEvent) {
 		win_id := C.webinix_interface_get_window_id(e.window)
 		func := function_list[win_id][bind_id]
 		resp := func(Event{
-			window: e.window,
-			event_type: vwebinix.event(e.event_type)
+			window: e.window
+			event_type: event(e.event_type)
 			element: e.element.vstring()
 			data: e.get()
 			event_number: e.event_number
@@ -236,17 +243,17 @@ fn native_event_handler(e &CEvent) {
 
 fn native_raw_event_handler(e &CEvent) {
 	native_event_handler(&CEvent{
-		window: e.window,
-		event_type: e.event_type,
-		element: c"",
-		data: e.data,
+		window: e.window
+		event_type: e.event_type
+		element: c''
+		data: e.data
 		event_number: e.event_number
 	})
 }
 
 // Bind a specific html element click event with a function. Empty element means all events.
-pub fn (window Window) bind (element string, func Function) Window {
-	bind_id := if element != "" {
+pub fn (window Window) bind(element string, func Function) Window {
+	bind_id := if element != '' {
 		C.webinix_bind(window, &char(element.str), native_event_handler)
 	} else {
 		C.webinix_bind(window, &char(element.str), native_raw_event_handler)
@@ -256,7 +263,7 @@ pub fn (window Window) bind (element string, func Function) Window {
 }
 
 // Set the maximum time in seconds to wait for browser to start
-pub fn set_timeout(timeout u64){
+pub fn set_timeout(timeout u64) {
 	C.webinix_set_timeout(timeout)
 }
 
