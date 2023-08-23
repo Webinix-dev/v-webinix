@@ -2,7 +2,7 @@ import vwebinix as webinix
 
 fn my_function_string(e &webinix.Event) webinix.Response {
 	// JavaScript:
-	// webinix_fn('MyID_One', 'Hello');
+	// webinix.call('MyID_One', 'Hello');
 
 	response := e.data.string
 	println('my_function_string: ${response}') // Hello
@@ -16,7 +16,7 @@ fn my_function_string(e &webinix.Event) webinix.Response {
 
 fn my_function_integer(e &webinix.Event) webinix.Response {
 	// JavaScript:
-	// webinix_fn('MyID_Two', 123456789);
+	// webinix.call('MyID_Two', 123456789);
 
 	response := e.data.int
 	println('my_function_integer: ${response}') // 123456789
@@ -25,7 +25,7 @@ fn my_function_integer(e &webinix.Event) webinix.Response {
 
 fn my_function_boolean(e &webinix.Event) webinix.Response {
 	// JavaScript:
-	// webinix_fn('MyID_Three', true);
+	// webinix.call('MyID_Three', true);
 
 	response := e.data.bool
 	println('my_function_boolean: ${response}') // true
@@ -34,7 +34,7 @@ fn my_function_boolean(e &webinix.Event) webinix.Response {
 
 fn my_function_with_response(e &webinix.Event) webinix.Response {
 	// JavaScript:
-	// const result = webinix_fn('MyID_Four', number);
+	// const result = webinix.call('MyID_Four', number);
 
 	number := e.data.int * 2
 	println('my_function_with_response: ${number}')
@@ -61,13 +61,13 @@ my_html := '
     <h2>Webinix - Call V from JavaScript Example</h2>
     <p>Call V function with argument (<em>See the logs in your terminal</em>)</p>
     <br>
-    <button onclick="webinix_fn(\'MyID_One\', \'Hello\');">Call my_function_string()</button>
+    <button onclick="webinix.call(\'MyID_One\', \'Hello\');">Call my_function_string()</button>
     <br>
     <br>
-    <button onclick="webinix_fn(\'MyID_Two\', 123456789);">Call my_function_integer()</button>
+    <button onclick="webinix.call(\'MyID_Two\', 123456789);">Call my_function_integer()</button>
     <br>
     <br>
-    <button onclick="webinix_fn(\'MyID_Three\', true);">Call my_function_boolean()</button>
+    <button onclick="webinix.call(\'MyID_Three\', true);">Call my_function_boolean()</button>
     <br>
     <br>
     <p>Call V function and wait for the response</p>
@@ -80,7 +80,7 @@ my_html := '
       function MyJS() {
         const MyInput = document.getElementById("MyInputID");
         const number = MyInput.value;
-        webinix_fn("MyID_Four", number).then((response) => {
+        webinix.call("MyID_Four", number).then((response) => {
             MyInput.value = response;
         });
       }
