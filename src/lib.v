@@ -1,6 +1,6 @@
 /*
 V-Webinix 2.3.0
-https://github.com/malisipi/vwebinix
+https://github.com/webinix-dev/v-webinix
 Copyright (c) 2023 Mehmet Ali.
 Licensed under MIT License.
 All rights reserved.
@@ -9,20 +9,6 @@ All rights reserved.
 [translated]
 module vwebinix
 
-// Webinix Core
-
-#include "@VMODROOT/webinix/webinix.h"
-
-#flag -L@VMODROOT/webinix -lwebinix-2-static-x64 -lpthread -lm
-#flag windows @VMODROOT/webinix/webinix-2-x64.dll -lws2_32
-#flag -DNDEBUG -DNO_CACHING -DNO_CGI -DNO_SSL -DUSE_WEBSOCKET -DMUST_IMPLEMENT_CLOCK_GETTIME
-
-// Debug
-$if webinix_log ? {
-	#flag -DWEBUI_LOG
-}
-
-// Consts
 __global (
 	function_list map[u64]map[u64]Function
 )
@@ -83,55 +69,6 @@ pub mut:
 }
 
 pub type Function = fn (e &Event) Response
-
-// C Functions
-
-// -- Definitions ---------------------
-fn C.webinix_new_window() Window
-fn C.webinix_new_window_id(win_id Window)
-fn C.webinix_get_new_window_id() Window
-fn C.webinix_bind(win Window, elem &char, func fn (&CEvent)) Window
-fn C.webinix_show(win Window, content &char) bool
-fn C.webinix_show_browser(win Window, content &char, browser browser) bool
-fn C.webinix_set_kiosk(win Window, kiosk bool)
-fn C.webinix_wait()
-fn C.webinix_close(win Window)
-fn C.webinix_destroy(win Window)
-fn C.webinix_exit()
-fn C.webinix_set_root_folder(win Window, path &char) // currently unused
-fn C.webinix_set_file_handler(win Window, handler fn (file_name &char, length int)) // currently unused
-
-// -- Definitions ---------------------
-fn C.webinix_is_shown(win Window) bool
-fn C.webinix_set_timeout(second u64)
-fn C.webinix_set_icon(win Window, icon &char, icon_type &char)
-fn C.webinix_set_multi_access(win Window, status bool)
-
-// -- JavaScript ----------------------
-fn C.webinix_run(win Window, script &char)
-fn C.webinix_script(win Window, script &char, timeout u64, buffer &char, buffer_length u64) bool
-fn C.webinix_set_runtime(win Window, runtime runtime)
-fn C.webinix_get_int(e &CEvent) i64
-fn C.webinix_get_string(e &CEvent) &char
-fn C.webinix_get_bool(e &CEvent) bool
-fn C.webinix_return_int(e &CEvent, n i64)
-fn C.webinix_return_string(e &CEvent, s &char)
-fn C.webinix_return_bool(e &CEvent, b bool)
-fn C.webinix_encode(str &char) &char // currently unused
-fn C.webinix_decode(str &char) &char // currently unused
-fn C.webinix_free(ptr voidptr) // currently unused
-fn C.webinix_malloc(size u64) voidptr // currently unused
-fn C.webinix_send_raw(size Window, func &char, raw voidptr, size u64) // currently unused
-fn C.webinix_set_hide(win Window, status bool) // currently unused
-
-// -- Interface -----------------------
-fn C.webinix_interface_bind(win Window, element &char, func fn (win u64, event_type u64, element &char, data &char, data_size u64, event_num 64)) u64 // currently unused
-fn C.webinix_interface_set_response(win Window, event_num u64, resp &char) // currently unused
-fn C.webinix_interface_is_app_running() bool
-fn C.webinix_interface_get_window_id(win Window) Window
-fn C.webinix_interface_get_bind_id(win Window, element &char) Window
-
-// V Interface
 
 pub fn (window Window) script(javascript string, timeout u64, size_buffer int) string {
 	response := &char(' '.repeat(size_buffer).str)
