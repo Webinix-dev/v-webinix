@@ -20,6 +20,16 @@ v install https://github.com/webinix-dev/v-webinix
 
 ## Usage
 
+After the installation, prepare the Webinix library for usage.
+
+```sh
+# Linux / macOs
+~/.vmodules/vwebinix/setup.vsh
+
+# Windows PowerShell
+v run $HOME/.vmodules/vwebinix/setup.vsh
+```
+
 > **Note**
 > On Windows it is recommended to use GCC or Clang to compile a Webinix V program. TCC is currently not working due to missing header files.
 > You can use the `-cc` flag to specify a custom compiler. E.g.:
