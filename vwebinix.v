@@ -12,16 +12,11 @@ module vwebinix
 // Webinix Core
 
 #include "@VMODROOT/webinix/webinix.h"
-#include "@VMODROOT/webinix/webinix_core.h"
-#flag @VMODROOT/webinix/webinix.c
 
-#flag @VMODROOT/webinix/civetweb/civetweb.c
+#flag -L@VMODROOT/webinix -lwebinix-2-static-x64 -lpthread -lm
+#flag windows @VMODROOT/webinix/webinix-2-x64.dll -lws2_32
 #flag -DNDEBUG -DNO_CACHING -DNO_CGI -DNO_SSL -DUSE_WEBSOCKET -DMUST_IMPLEMENT_CLOCK_GETTIME
 
-#flag windows -Dstrtoll=_strtoi64 -Dstrtoull=_strtoui64 -lws2_32 -lAdvapi32 -luser32 -lcomdlg32
-$if tinyc {
-	#flag windows -DWEBUI_NO_TLHELPER32
-}
 // Debug
 $if webinix_log ? {
 	#flag -DWEBUI_LOG
