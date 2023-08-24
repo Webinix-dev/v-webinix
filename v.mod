@@ -4,6 +4,6 @@ Module {
 	version: '2.3.0'
 	license: 'MIT'
 	author: 'Mehmet Ali'
-	repo_url: 'https://github.com/malisipi/vwebinix'
+	repo_url: 'https://github.com/webinix-dev/v-webinix'
 	dependencies: []
 }
