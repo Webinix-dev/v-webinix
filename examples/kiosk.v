@@ -1,6 +1,26 @@
-import vwebinix as webinix
+import vwebinix as ui
 
-mut my_window := webinix.new_window()
-my_window.set_kiosk(true)
-my_window.show('<html>A kiosk example</html>')
-webinix.wait()
+mut w := ui.new_window()
+w.set_kiosk(true)
+w.show('<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kiosk Example</title>
+		<style>
+			body {
+				background: linear-gradient(to left, #36265a, #654da9);
+				color: AliceBlue;
+				font: 16px sans-serif;
+				text-align: center;
+				margin-top: 30px;
+			}
+			button {
+				margin: 5px 0 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Webinix - Kiosk Example</h1>
+	</body>
+</html>')
+ui.wait()

@@ -165,6 +165,10 @@ pub fn exit() {
 	C.webinix_exit()
 }
 
+pub fn (window Window) set_root_folder(path string) {
+	C.webinix_set_root_folder(window, &char(path.str))
+}
+
 // Set the window in Kiosk mode (Full screen)
 pub fn (window Window) set_kiosk(kiosk bool) {
 	C.webinix_set_kiosk(window, kiosk)

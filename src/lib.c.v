@@ -23,7 +23,7 @@ fn C.webinix_wait()
 fn C.webinix_close(win Window)
 fn C.webinix_destroy(win Window)
 fn C.webinix_exit()
-fn C.webinix_set_root_folder(win Window, path &char) // currently unused
+fn C.webinix_set_root_folder(win Window, path &char)
 fn C.webinix_set_file_handler(win Window, handler fn (file_name &char, length int)) // currently unused
 
 // -- Definitions ---------------------
