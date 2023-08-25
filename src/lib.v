@@ -81,9 +81,14 @@ pub fn (w Window) set_kiosk(kiosk bool) {
 	C.webinix_set_kiosk(w, kiosk)
 }
 
-// Set the web-server root folder path.
+// Set the web-server root folder path for a specific window.
 pub fn (w Window) set_root_folder(path string) {
 	C.webinix_set_root_folder(w, &char(path.str))
+}
+
+// Set the web-server root folder path for all windows.
+pub fn set_root_folder(path string) {
+	C.webinix_set_default_root_folder(&char(path.str))
 }
 
 // Wait until all opened windows get closed.
