@@ -2,8 +2,10 @@ module vwebinix
 
 #include "@VMODROOT/webinix/webinix.h"
 
-#flag -L@VMODROOT/webinix -lwebinix-2-static-x64 -lpthread -lm
-#flag windows @VMODROOT/webinix/webinix-2-x64.dll -lws2_32
+#flag -L@VMODROOT/webinix -lwebinix-2-static
+#flag linux -lpthread -lm
+#flag darwin -lpthread -lm
+#flag windows -lwebinix-2 -lws2_32
 
 struct C.webinix_event_t {
 pub:
