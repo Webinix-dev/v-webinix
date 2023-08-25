@@ -30,7 +30,7 @@ fn C.webinix_exit()
 fn C.webinix_set_root_folder(win Window, path &char)
 fn C.webinix_set_file_handler(win Window, handler fn (file_name &char, length int)) // currently unused
 
-// -- Definitions ---------------------
+// -- Other ---------------------------
 fn C.webinix_is_shown(win Window) bool
 fn C.webinix_set_timeout(second usize)
 fn C.webinix_set_icon(win Window, icon &char, icon_type &char)
@@ -46,7 +46,6 @@ fn C.webinix_get_bool(e &Event) bool
 fn C.webinix_return_int(e &Event, n i64)
 fn C.webinix_return_string(e &Event, s &char)
 fn C.webinix_return_bool(e &Event, b bool)
-
 fn C.webinix_encode(str &char) &char // currently unused
 fn C.webinix_decode(str &char) &char // currently unused
 fn C.webinix_free(ptr voidptr) // currently unused
