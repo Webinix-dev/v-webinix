@@ -1,7 +1,6 @@
 Module {
-	name: 'V Webinix Example - Serve a Folder'
-	description: ''
-	version: '0.1.0'
+	name: 'serve_a_folder'
+	description: 'A V Webinix Example'
 	license: 'MIT'
 	dependencies: []
 }

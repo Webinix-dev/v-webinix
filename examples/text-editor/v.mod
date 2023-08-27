@@ -1,7 +1,6 @@
 Module {
-	name: 'V Webinix Example - text-edtior'
-	description: ''
-	version: '0.1.0'
+	name: 'text-edtior'
+	description: 'A V Webinix Example'
 	license: 'MIT'
 	dependencies: []
 }
