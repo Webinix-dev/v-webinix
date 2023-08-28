@@ -19,5 +19,5 @@ w.show('<!DOCTYPE html>
 	<body>
 		<h1>Webinix - Kiosk Example</h1>
 	</body>
-</html>')
+</html>') or {}
 ui.wait()
