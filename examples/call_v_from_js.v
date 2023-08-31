@@ -54,6 +54,8 @@ doc := '<!DOCTYPE html>
 				margin: 5px 0 10px;
 			}
 		</style>
+		<!-- Connect this window to the background app -->
+		<script src="/webinix.js"></script>
 	</head>
 	<body>
 		<h1>Webinix - Call V from JavaScript</h1>
