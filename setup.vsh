@@ -10,11 +10,11 @@ const (
 		false
 	}
 	lib_url   = 'https://github.com/webinix-dev/webinix'
-	lib_dir   = @VMODROOT + os.path_separator + 'webinix'
+	lib_dir   = os.join_path(@VMODROOT, 'webinix')
 	build_dir = if is_ci {
 		lib_dir + '_tmp'
 	} else {
-		os.temp_dir() + os.path_separator + 'webinix'
+		os.join_path(os.temp_dir(), 'webinix')
 	}
 )
 
