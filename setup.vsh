@@ -70,12 +70,18 @@ fn build() ! {
 }
 
 fn move() ! {
-	// The using `os.mv` steps currently turns out saver than e.g., especially on Windows
-	// execute('mv ${lib_dir}/dist/ ./dist/ && mv ${lib_dir}/include/* ./dist/')
 	chdir(build_dir)!
-	mv('include/webinix.h', 'dist/webinix.h')!
-	mv('include/webinix.hpp', 'dist/webinix.hpp')!
-	mv('dist/', lib_dir)!
+	$if windows {
+		// Using single `os.mv` steps turns out saver on Windows
+		mv('include/webinix.h', 'dist/webinix.h')!
+		mv('include/webinix.hpp', 'dist/webinix.hpp')!
+		mv('dist/', lib_dir)!
+	} $else {
+		res := os.execute('mv include/webinix.* dist/ && mv dist/ ${lib_dir}/')
+		if res.exit_code != 0 {
+			return error('Failed moving Webinix build output to ${lib_dir}. ${res.output}')
+		}
+	}
 }
 
 fn run(cmd cli.Command) ! {
