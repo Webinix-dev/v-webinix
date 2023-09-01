@@ -78,7 +78,7 @@ After the installation, prepare the Webinix library for usage.
 ~/.vmodules/vwebinix/setup.vsh
 
 # Windows PowerShell
-v run $HOME/.vmodules/vwebinix/setup.vsh
+v run %USERPROFILE%/.vmodules/vwebinix/setup.vsh
 ```
 
 > **Note**
