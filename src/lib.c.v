@@ -22,7 +22,7 @@ pub:
 fn C.webinix_new_window() Window
 fn C.webinix_new_window_id(win_id Window)
 fn C.webinix_get_new_window_id() Window
-fn C.webinix_bind(win Window, elem &char, func fn (&Event)) Window
+fn C.webinix_bind(win Window, elem &char, func fn (&Event)) Function
 fn C.webinix_show(win Window, content &char) bool
 fn C.webinix_show_browser(win Window, content &char, browser Browser) bool
 fn C.webinix_set_kiosk(win Window, kiosk bool)
