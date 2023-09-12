@@ -1,5 +1,5 @@
 /*
-V-Webinix 2.3.0
+V-Webinix 2.4.0-beta
 https://github.com/webinix-dev/v-webinix
 Copyright (c) 2023 Mehmet Ali.
 Licensed under MIT License.
