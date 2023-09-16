@@ -99,7 +99,7 @@ const html = '<!DOCTYPE html>
         text-align: center;
       }
     </style>
-    <script src="/webinix.js"></script>
+    <script src="webinix.js"></script>
   </head>
   <body>
     <h1>Thanks for using Webinix!</h1>

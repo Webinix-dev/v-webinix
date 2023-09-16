@@ -16,7 +16,7 @@ w.show('<!DOCTYPE html>
 			}
 		</style>
 		<!-- Connect this window to the background app -->
-		<script src="/webinix.js"></script>
+		<script src="webinix.js"></script>
 	</head>
 	<body>
 		<h1>Webinix - Kiosk Example</h1>

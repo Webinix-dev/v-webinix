@@ -54,7 +54,7 @@ fn test_thread_gc() {
 	})
 
 	w.show('<html style="background: #654da9; color: #eee">
-<head><script src="/webinix.js"></script></head>
+<head><script src="webinix.js"></script></head>
 <body>
 	<samp>${@FN}</samp>
 	<script>setTimeout(async () => { await webinix.call("v_fn", "foo"); }, 1000)</script>

@@ -17,7 +17,7 @@ const doc = '<!DOCTYPE html>
 				margin: 5px 0 10px;
 			}
 		</style>
-		<script src="/webinix.js"></script>
+		<script src="webinix.js"></script>
 	</head>
 	<body>
 		<h1>Webinix 2 - V Example</h1><br>
