@@ -1,6 +1,12 @@
 module vwebinix
 
-#include "@VMODROOT/webinix/webinix.h"
+#include "@VMODROOT/webinix/include/webinix.h"
+
+$if webinix_log ? {
+	#flag -L@VMODROOT/webinix/debug -lwebinix-2-static
+} $else {
+	#flag -L@VMODROOT/webinix -lwebinix-2-static
+}
 
 #flag -L@VMODROOT/webinix -lwebinix-2-static
 #flag linux -lpthread -lm
