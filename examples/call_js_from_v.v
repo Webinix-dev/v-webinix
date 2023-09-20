@@ -5,6 +5,7 @@ const doc = '<!DOCTYPE html>
 <html>
 	<head>
 		<title>Call JavaScript from V Example</title>
+		<script src="webinix.js"></script>
 		<style>
 			body {
 				background: linear-gradient(to left, #36265a, #654da9);
@@ -17,8 +18,6 @@ const doc = '<!DOCTYPE html>
 				margin: 5px 0 10px;
 			}
 		</style>
-		<!-- Connect this window to the background app -->
-		<script src="webinix.js"></script>
 	</head>
 	<body>
 		<h1>Webinix - Call JavaScript from V</h1>
