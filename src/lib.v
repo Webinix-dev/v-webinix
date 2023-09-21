@@ -68,8 +68,8 @@ pub fn (w Window) new_window() {
 	C.webinix_new_window_id(w)
 }
 
-// get_new_window_id returns a free window ID that can be used with the `new_window` method.
-pub fn get_new_window_id() Window {
+// new_window_id returns a free window ID that can be used with the `new_window` method.
+pub fn new_window_id() Window {
 	return C.webinix_get_new_window_id()
 }
 
@@ -106,16 +106,6 @@ pub fn (w Window) set_kiosk(kiosk bool) {
 	C.webinix_set_kiosk(w, kiosk)
 }
 
-// set_root_folder sets the web-server root folder path for the window.
-pub fn (w Window) set_root_folder(path string) {
-	C.webinix_set_root_folder(w, &char(path.str))
-}
-
-// set_root_folder sets the web-server root folder path for all windows.
-pub fn set_root_folder(path string) {
-	C.webinix_set_default_root_folder(&char(path.str))
-}
-
 // wait waits until all opened windows get closed.
 pub fn wait() {
 	C.webinix_wait()
@@ -136,7 +126,15 @@ pub fn exit() {
 	C.webinix_exit()
 }
 
-// == Other ===================================================================
+// set_root_folder sets the web-server root folder path for the window.
+pub fn (w Window) set_root_folder(path string) {
+	C.webinix_set_root_folder(w, &char(path.str))
+}
+
+// set_root_folder sets the web-server root folder path for all windows.
+pub fn set_root_folder(path string) {
+	C.webinix_set_default_root_folder(&char(path.str))
+}
 
 // is_show checks if the window is still running.
 pub fn (w Window) is_shown() bool {
