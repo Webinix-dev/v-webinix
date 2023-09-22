@@ -58,8 +58,8 @@ fn C.webinix_get_bool(e &Event) bool
 fn C.webinix_return_int(e &Event, n i64)
 fn C.webinix_return_string(e &Event, s &char)
 fn C.webinix_return_bool(e &Event, b bool)
-fn C.webinix_encode(str &char) &char // not wrapped
-fn C.webinix_decode(str &char) &char // not wrapped
+fn C.webinix_encode(str &char) &char
+fn C.webinix_decode(str &char) &char
 fn C.webinix_free(ptr voidptr) // not wrapped
 fn C.webinix_malloc(size usize) voidptr // not wrapped
 fn C.webinix_send_raw(size Window, func &char, raw voidptr, size usize) // not wrapped
