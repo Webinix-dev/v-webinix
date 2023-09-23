@@ -181,6 +181,18 @@ pub fn (w Window) set_position(x usize, y usize) {
 	C.webinix_set_position(w, x, y)
 }
 
+// set_profile sets the web browser profile to use.
+// An empty `name` and `path` means the default user profile.
+// Needs to be called before `webinix_show()`.
+pub fn (w Window) set_profile(name string, path string) {
+	C.webinix_set_profile(w, &char(name.str), &char(path.str))
+}
+
+// get_url returns the full current URL
+pub fn (w Window) get_url() string {
+	return unsafe { (&char(C.webinix_get_url(w))).vstring() }
+}
+
 // == Javascript ==============================================================
 
 // run executes JavaScript without waiting for the response.

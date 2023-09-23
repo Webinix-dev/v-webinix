@@ -41,12 +41,20 @@ fn C.webinix_exit()
 fn C.webinix_set_root_folder(win Window, path &char)
 fn C.webinix_set_default_root_folder(path &char)
 fn C.webinix_set_file_handler(win Window, handler fn (file_name &char, length int)) // not wrapped
-
-// -- Other ---------------------------
 fn C.webinix_is_shown(win Window) bool
 fn C.webinix_set_timeout(second usize)
 fn C.webinix_set_icon(win Window, icon &char, icon_type &char)
 fn C.webinix_set_multi_access(win Window, status bool)
+fn C.webinix_encode(str &char) &char
+fn C.webinix_decode(str &char) &char
+fn C.webinix_free(ptr voidptr) // not wrapped
+fn C.webinix_malloc(size usize) voidptr // not wrapped
+fn C.webinix_send_raw(size Window, func &char, raw voidptr, size usize) // not wrapped
+fn C.webinix_set_hide(win Window, status bool)
+fn C.webinix_set_size(win Window, width usize, height usize)
+fn C.webinix_set_position(win Window, x usize, y usize)
+fn C.webinix_set_profile(win Window, name &char, path &char)
+fn C.webinix_get_url(win Window) &char
 
 // -- JavaScript ----------------------
 fn C.webinix_run(win Window, script &char)
@@ -58,14 +66,6 @@ fn C.webinix_get_bool(e &Event) bool
 fn C.webinix_return_int(e &Event, n i64)
 fn C.webinix_return_string(e &Event, s &char)
 fn C.webinix_return_bool(e &Event, b bool)
-fn C.webinix_encode(str &char) &char
-fn C.webinix_decode(str &char) &char
-fn C.webinix_free(ptr voidptr) // not wrapped
-fn C.webinix_malloc(size usize) voidptr // not wrapped
-fn C.webinix_send_raw(size Window, func &char, raw voidptr, size usize) // not wrapped
-fn C.webinix_set_hide(win Window, status bool)
-fn C.webinix_set_size(win Window, width usize, height usize)
-fn C.webinix_set_position(win Window, x usize, y usize)
 
 // -- Interface ----------------------- // not wrapped
 fn C.webinix_interface_bind(win Window, element &char, func fn (win Window, event_type EventType, element &char, data &char, data_size usize, event_num usize)) Function
