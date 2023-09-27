@@ -2,6 +2,7 @@
 V-Webinix 2.4.0-beta
 https://github.com/webinix-dev/v-webinix
 Copyright (c) 2023 Mehmet Ali.
+Copyright (c) 2023 Webinix Contributors.
 Licensed under MIT License.
 All rights reserved.
 */
