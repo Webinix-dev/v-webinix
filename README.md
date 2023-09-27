@@ -122,7 +122,10 @@ Find more examples in the [`examples/`](https://github.com/webinix-dev/v-webinix
 
 ## Documentation
 
-- [Online Documentation - V](https://webinix.me/docs/2.4.0/#/v_api)
+- [Online Documentation](https://webinix.me/docs/#/v) (WIP)
+
+> **Note**
+> Until our Online Documentation is finished, you can referrer to [`src/lib.v`](https://github.com/webinix-dev/v-webinix/tree/main/src/lib.v) or use V's builtin `v doc -comments vwebinix.src` for the latest overview of exported and commented functions.
 
 ## Supported Web Browsers
 
