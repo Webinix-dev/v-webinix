@@ -30,7 +30,7 @@ struct C.GC_stack_base {}
 fn C.webinix_new_window() Window
 fn C.webinix_new_window_id(win_id Window)
 fn C.webinix_get_new_window_id() Window
-fn C.webinix_bind(win Window, elem &char, func fn (&Event)) Function
+fn C.webinix_bind(win Window, elem &char, func fn (&C.webinix_event_t)) Function
 fn C.webinix_show(win Window, content &char) bool
 fn C.webinix_show_browser(win Window, content &char, browser Browser) bool
 fn C.webinix_set_kiosk(win Window, kiosk bool)
@@ -61,12 +61,12 @@ fn C.webinix_navigate(win Window, url &char)
 fn C.webinix_run(win Window, script &char)
 fn C.webinix_script(win Window, script &char, timeout usize, buffer &char, buffer_length usize) bool
 fn C.webinix_set_runtime(win Window, runtime Runtime)
-fn C.webinix_get_int(e &Event) i64
-fn C.webinix_get_string(e &Event) &char
-fn C.webinix_get_bool(e &Event) bool
-fn C.webinix_return_int(e &Event, n i64)
-fn C.webinix_return_string(e &Event, s &char)
-fn C.webinix_return_bool(e &Event, b bool)
+fn C.webinix_get_int(e &C.webinix_event_t) i64
+fn C.webinix_get_string(e &C.webinix_event_t) &char
+fn C.webinix_get_bool(e &C.webinix_event_t) bool
+fn C.webinix_return_int(e &C.webinix_event_t, n i64)
+fn C.webinix_return_string(e &C.webinix_event_t, s &char)
+fn C.webinix_return_bool(e &C.webinix_event_t, b bool)
 
 // -- Interface ----------------------- // not wrapped
 fn C.webinix_interface_bind(win Window, element &char, func fn (win Window, event_type EventType, element &char, data &char, data_size usize, event_num usize)) Function
