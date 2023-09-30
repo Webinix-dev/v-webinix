@@ -2,7 +2,6 @@ import log
 import time
 import vwebinix as ui
 import vwebinix.tests.utils
-import os
 
 struct App {
 mut:

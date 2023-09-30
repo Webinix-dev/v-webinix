@@ -1,6 +1,5 @@
 import vwebinix as ui
 import vwebinix.tests.utils
-import time
 
 fn test_js_fn_call() {
 	w := ui.new_window()
