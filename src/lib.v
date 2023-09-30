@@ -10,7 +10,6 @@ All rights reserved.
 module vwebinix
 
 import json
-import time
 
 // A Window number of a Webinix window.
 pub type Window = usize
@@ -117,17 +116,6 @@ pub fn (w Window) bind[T](element string, func fn (&Event) T) Function {
 		e.@return(func(e))
 		C.GC_unregister_my_thread()
 	})
-}
-
-fn (w Window) await_shown(timeout usize) ! {
-	for _ in 0 .. timeout * 100 {
-		if w.is_shown() {
-			return
-		}
-		// Slow down check interval to reduce load.
-		time.sleep(10 * time.millisecond)
-	}
-	return error('Failed showing window.')
 }
 
 // show opens a window using embedded HTML, or a file.
