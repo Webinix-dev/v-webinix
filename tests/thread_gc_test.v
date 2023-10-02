@@ -1,5 +1,4 @@
 import log
-import time
 import vwebinix as ui
 import vwebinix.tests.utils
 
