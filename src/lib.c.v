@@ -57,9 +57,13 @@ fn C.webinix_run(win Window, script &char)
 fn C.webinix_script(win Window, script &char, timeout usize, buffer &char, buffer_length usize) bool
 fn C.webinix_set_runtime(win Window, runtime Runtime)
 fn C.webinix_get_int(e &C.webinix_event_t) i64
+fn C.webinix_get_int_at(e &C.webinix_event_t, idx usize) i64
 fn C.webinix_get_string(e &C.webinix_event_t) &char
+fn C.webinix_get_string_at(e &C.webinix_event_t, idx usize) &char
 fn C.webinix_get_bool(e &C.webinix_event_t) bool
+fn C.webinix_get_bool_at(e &C.webinix_event_t, idx usize) bool
 fn C.webinix_get_size(e &C.webinix_event_t) usize
+fn C.webinix_get_size_at(e &C.webinix_event_t, idx usize) usize
 fn C.webinix_return_int(e &C.webinix_event_t, n i64)
 fn C.webinix_return_string(e &C.webinix_event_t, s &char)
 fn C.webinix_return_bool(e &C.webinix_event_t, b bool)
