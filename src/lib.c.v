@@ -73,4 +73,4 @@ fn C.webinix_return_bool(e &C.webinix_event_t, b bool)
 fn C.webinix_interface_bind(win Window, element &char, func fn (win Window, event_type EventType, element &char, event_num usize, bind_id usize)) Function
 fn C.webinix_interface_set_response(win Window, event_num usize, resp &char)
 fn C.webinix_interface_is_app_running() bool
-fn C.webinix_interface_get_bind_id(win Window, element &char) Function
+fn C.webinix_interface_get_window_id(win Window) Window
