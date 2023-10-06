@@ -42,7 +42,6 @@ fn C.webinix_set_file_handler(win Window, handler fn (file_name &char, length in
 fn C.webinix_is_shown(win Window) bool
 fn C.webinix_set_timeout(second usize)
 fn C.webinix_set_icon(win Window, icon &char, icon_type &char)
-fn C.webinix_set_multi_access(win Window, status bool)
 fn C.webinix_encode(str &char) &char
 fn C.webinix_decode(str &char) &char
 fn C.webinix_free(ptr voidptr) // not wrapped
