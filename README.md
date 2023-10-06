@@ -127,6 +127,19 @@ Find more examples in the [`examples/`](https://github.com/webinix-dev/v-webinix
 > **Note**
 > Until our Online Documentation is finished, you can referrer to [`src/lib.v`](https://github.com/webinix-dev/v-webinix/tree/main/src/lib.v) or use V's builtin `v doc -comments vwebinix.src` for the latest overview of exported and commented functions.
 
+
+- To use Webinix's debug build in your V-Webinix application, add the `-d webinix_log` flag. E.g.:
+
+  ```sh
+  v -d webinix_log run examples/call_v_from_js.v
+  ```
+
+- Run tests locally:
+
+  ```sh
+  VJOBS=1 v -stats test tests/
+  ```
+
 ## Supported Web Browsers
 
 | Browser | Windows | macOS | Linux |
