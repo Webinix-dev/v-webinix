@@ -12,8 +12,8 @@ const (
 	archives = {
 		'Linux':   {
 			'amd64':   'webinix-linux-gcc-x64.tar.gz'
-			'aarch64': 'webinix-linux-gcc-aarch64.tar.gz'
-			'arm64':   'webinix-linux-gcc-aarch64.tar.gz'
+			'aarch64': 'webinix-linux-gcc-arm64.tar.gz'
+			'arm64':   'webinix-linux-gcc-arm64.tar.gz'
 			'arm32':   'webinix-linux-gcc-arm.tar.gz'
 		}
 		'MacOS':   {
