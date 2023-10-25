@@ -51,6 +51,7 @@ fn C.webinix_set_position(win Window, x usize, y usize)
 fn C.webinix_set_profile(win Window, name &char, path &char)
 fn C.webinix_get_url(win Window) &char
 fn C.webinix_navigate(win Window, url &char)
+fn C.webinix_clean()
 
 // -- JavaScript ----------------------
 fn C.webinix_run(win Window, script &char)
