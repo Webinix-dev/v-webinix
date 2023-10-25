@@ -8,7 +8,6 @@ $if webinix_log ? {
 	#flag -L@VMODROOT/webinix -lwebinix-2-static
 }
 
-#flag -L@VMODROOT/webinix -lwebinix-2-static
 #flag linux -lpthread -lm
 #flag darwin -lpthread -lm
 #flag windows -lwebinix-2 -lws2_32
