@@ -12,7 +12,7 @@ $if webinix_log ? {
 #flag darwin -lpthread -lm
 #flag windows -lwebinix-2 -lws2_32
 
-[typedef]
+@[typedef]
 struct C.webinix_event_t {
 pub:
 	window       Window    // The window object number
