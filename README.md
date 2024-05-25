@@ -51,8 +51,8 @@ v run %USERPROFILE%/.vmodules/vwebinix/setup.vsh
 ```
 
 > [!TIP]
-> On Windows it is recommended to use GCC or Clang to compile a Webinix V program. TCC is currently not working due to missing header files.
-> You can use the `-cc` flag to specify a custom compiler. E.g.:
+> It is recommended to use GCC or Clang to compile a Webinix V program.
+> TCC is currently not working due to missing header files. E.g.:
 >
 > ```
 > v -cc gcc run .
