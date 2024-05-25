@@ -43,7 +43,9 @@ After the installation, prepare the Webinix library for usage.
 ```sh
 # Linux / macOs
 ~/.vmodules/vwebinix/setup.vsh
+```
 
+```sh
 # Windows PowerShell
 v run %USERPROFILE%/.vmodules/vwebinix/setup.vsh
 ```
