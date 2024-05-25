@@ -100,7 +100,7 @@ Find more examples in the [`examples/`](https://github.com/webinix-dev/v-webinix
 - [Online Documentation](https://webinix.me/docs/#/v) (WIP)
 
 > [!NOTE]
-> Until our Online Documentation is finished, you can referrer to [`src/lib.v`](https://github.com/webinix-dev/v-webinix/tree/main/src/lib.v) or use V's builtin `v doc -comments vwebinix.src` for the latest overview of exported and commented functions.
+> Until our online documentation is finished, you can refer to [`src/lib.v`](https://github.com/webinix-dev/v-webinix/tree/main/src/lib.v) or use V's built-in `v doc -comments vwebinix` in the terminal for the latest overview of exported functions.
 
 - To use Webinix's debug build in your V-Webinix application, add the `-d webinix_log` flag. E.g.:
 
