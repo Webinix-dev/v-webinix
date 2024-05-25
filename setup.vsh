@@ -7,7 +7,7 @@ import net.http
 
 // Latest tag that should is tested with the wrapper.
 // Other versions might include breaking changes.
-const webinix_version = '2.4.2'
+const webinix_version = '2.4.1'
 const platform = pref.get_host_os()
 const arch = pref.get_host_arch()
 const base_url = 'https://github.com/webinix-dev/webinix/releases'
