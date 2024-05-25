@@ -7,7 +7,7 @@
 // Source: https://github.com/webinix-dev/v-webinix
 //
 // Copyright (c) 2023 Mehmet Ali.
-// Copyright (c) 2023 Webinix Contributors.
+// Copyright (c) 2023-2024 Webinix Contributors.
 module vwebinix
 
 import json
