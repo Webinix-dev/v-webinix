@@ -38,19 +38,7 @@ v install https://github.com/webinix-dev/v-webinix
 
 ## Usage
 
-After the installation, prepare the Webinix library for usage.
-
-```sh
-# Linux / macOs
-~/.vmodules/vwebinix/setup.vsh
-```
-
-```sh
-# Windows PowerShell
-v run %USERPROFILE%/.vmodules/vwebinix/setup.vsh
-```
-
-> [!TIP]
+> [!NOTE]
 > It is recommended to use GCC or Clang to compile a Webinix V program.
 > TCC is currently not working due to missing header files. E.g.:
 >
@@ -99,13 +87,13 @@ Find more examples in the [`examples/`](https://github.com/webinix-dev/v-webinix
 
 - [Online Documentation](https://webinix.me/docs/#/v) (WIP)
 
-> [!NOTE]
+> [!TIP]
 > Until our online documentation is finished, you can refer to [`src/lib.v`](https://github.com/webinix-dev/v-webinix/tree/main/src/lib.v) or use V's built-in `v doc -comments vwebinix` in the terminal for the latest overview of exported functions.
 
-- To use Webinix's debug build in your V-Webinix application, add the `-d webinix_log` flag. E.g.:
+- To use Webinix's debug build in your V-Webinix application, add the `-d debug` flag. E.g.:
 
   ```sh
-  v -d webinix_log run examples/call_v_from_js.v
+  v -d debug run examples/call_v_from_js.v
   ```
 
 - Run tests locally:
