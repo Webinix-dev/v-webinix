@@ -9,7 +9,6 @@
 *.so
 *.so.*
 *.dylib
-webinix/
 
 # Binaries in project root
 setup

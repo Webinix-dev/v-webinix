@@ -1,0 +1,3 @@
+[submodule "webinix"]
+	path = webinix
+	url = https://github.com/webinix-dev/webinix.git
