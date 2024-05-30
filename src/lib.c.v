@@ -6,8 +6,7 @@ module vwebinix
 #flag @VMODROOT/webinix/src/civetweb/civetweb.c
 #flag @VMODROOT/webinix/src/webinix.c
 
-#flag linux -lpthread -lm
-#flag darwin -lpthread -lm -framework WebKit
+#flag darwin -framework WebKit
 #flag windows -lws2_32 -lOle32
 
 $if msvc {
