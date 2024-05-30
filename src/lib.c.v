@@ -1,12 +1,15 @@
 module vwebinix
 
 #include "@VMODROOT/webinix/include/webinix.h"
+$if macos {
+	#include "@VMODROOT/webinix/src/webview/wkwebview.m"
+}
 
 #flag -I@VMODROOT/webinix/include/ -DNDEBUG -DNO_CACHING -DNO_CGI -DUSE_WEBSOCKET
 #flag @VMODROOT/webinix/src/civetweb/civetweb.c
 #flag @VMODROOT/webinix/src/webinix.c
 
-#flag darwin -framework WebKit
+#flag darwin -framework WebKit -framework Cocoa
 #flag windows -lWs2_32 -lOle32
 
 $if msvc {
