@@ -19,7 +19,7 @@ $if use_tls ? {
 } $else {
 	#flag -DNO_SSL
 }
-$if debug ? {
+$if webinix_log ? {
 	#flag -DWEBUI_LOG
 }
 

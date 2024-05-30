@@ -107,7 +107,7 @@ Find more examples in the [`examples/`](https://github.com/webinix-dev/v-webinix
 - To use Webinix's debug build in your V-Webinix application, add the `-d debug` flag. E.g.:
 
   ```sh
-  v -d debug run examples/call_v_from_js.v
+  v -d webinix_log run examples/call_v_from_js.v
   ```
 
 - Run tests locally:
