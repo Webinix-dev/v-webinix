@@ -41,8 +41,10 @@ fn C.webinix_new_window() Window
 fn C.webinix_new_window_id(win_id Window)
 fn C.webinix_get_new_window_id() Window
 fn C.webinix_bind(win Window, elem &char, func fn (&C.webinix_event_t)) Function
+fn C.webinix_get_best_browser(win Window) Browser
 fn C.webinix_show(win Window, content &char) bool
 fn C.webinix_show_browser(win Window, content &char, browser Browser) bool
+fn C.webinix_show_wv(win Window, content &char) bool
 fn C.webinix_set_kiosk(win Window, kiosk bool)
 fn C.webinix_wait()
 fn C.webinix_close(win Window)
@@ -63,16 +65,28 @@ fn C.webinix_set_hide(win Window, status bool)
 fn C.webinix_set_size(win Window, width usize, height usize)
 fn C.webinix_set_position(win Window, x usize, y usize)
 fn C.webinix_set_profile(win Window, name &char, path &char)
+fn C.webinix_set_proxy(win Window, proxy_server &char)
 fn C.webinix_get_url(win Window) &char
+fn C.webinix_set_public(win Window, status bool)
 fn C.webinix_navigate(win Window, url &char)
 fn C.webinix_clean()
+fn C.webinix_delete_all_profiles()
+fn C.webinix_delete_profile(win Window)
+fn C.webinix_get_parent_process_id(win Window) usize
+fn C.webinix_get_child_process_id(win Window) usize
+fn C.webinix_set_port(win Window, port usize) bool
+// fn C.webinix_config(option Config, port usize) bool
+fn C.webinix_set_tls_certificate(certificate_pem &char, private_key_pem &char) bool
 
 // -- JavaScript ----------------------
 fn C.webinix_run(win Window, script &char)
 fn C.webinix_script(win Window, script &char, timeout usize, buffer &char, buffer_length usize) bool
 fn C.webinix_set_runtime(win Window, runtime Runtime)
+fn C.webinix_get_count(e &C.webinix_event_t) usize
 fn C.webinix_get_int(e &C.webinix_event_t) i64
 fn C.webinix_get_int_at(e &C.webinix_event_t, idx usize) i64
+fn C.webinix_get_float(e &C.webinix_event_t) f64
+fn C.webinix_get_float_at(e &C.webinix_event_t, idx usize) f64
 fn C.webinix_get_string(e &C.webinix_event_t) &char
 fn C.webinix_get_string_at(e &C.webinix_event_t, idx usize) &char
 fn C.webinix_get_bool(e &C.webinix_event_t) bool
