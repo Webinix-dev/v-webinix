@@ -75,8 +75,9 @@ fn C.webinix_delete_profile(win Window)
 fn C.webinix_get_parent_process_id(win Window) usize
 fn C.webinix_get_child_process_id(win Window) usize
 fn C.webinix_set_port(win Window, port usize) bool
-// fn C.webinix_config(option Config, port usize) bool
 fn C.webinix_set_tls_certificate(certificate_pem &char, private_key_pem &char) bool
+
+// fn C.webinix_config(option Config, port usize) bool
 
 // -- JavaScript ----------------------
 fn C.webinix_run(win Window, script &char)
