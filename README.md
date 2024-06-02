@@ -1,6 +1,6 @@
 <div align="center">
 
-# V-Webinix
+# Webinix V
 
 #### [Features](#features) · [Installation](#installation) · [Usage](#usage) · [Documentation](#documentation) · [Webinix](https://github.com/webinix-dev/webinix)
 
