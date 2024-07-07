@@ -1,6 +1,8 @@
 <div align="center">
 
-# Webinix V
+![Logo](https://raw.githubusercontent.com/webinix-dev/webinix-logo/main/webinix_v.png)
+
+# V-Webinix
 
 #### [Features](#features) · [Installation](#installation) · [Usage](#usage) · [Documentation](#documentation) · [Webinix](https://github.com/webinix-dev/webinix)
 
@@ -17,7 +19,7 @@
 > Use any web browser or WebView as GUI.\
 > With V in the backend and modern web technologies in the frontend.
 
-![Screenshot](https://github.com/webinix-dev/webinix/assets/16948659/39c5b000-83eb-4779-a7ce-9769d3acf204)
+![Screenshot](https://raw.githubusercontent.com/webinix-dev/webinix-logo/main/screenshot.png)
 
 </div>
 
